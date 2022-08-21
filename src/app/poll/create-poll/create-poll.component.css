@@ -1,0 +1,41 @@
+@media (min-width: 640px) {
+  .create-poll-content {
+    min-width: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .create-poll-content {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+
+.option--dismiss {
+  display: flex;
+  align-content: center;
+  align-self: center;
+  justify-content: center;
+  width: var(--su-static16);
+  height: var(--su-static16);
+  margin-left: var(--su4);
+  padding: var(--su1);
+  border-radius: var(--br-sm);
+  cursor: pointer;
+  color: var(--black-400);
+}
+.option--dismiss:hover {
+  color: var(--black);
+}
+
+.option--plus {
+  cursor: pointer;
+  color: var(--black-400);
+}
+
+.option--plus:hover {
+  color: var(--black);
+
+}

@@ -1,0 +1,7 @@
+<ul class="s-menu">
+  <li *ngFor="let nav of navs">
+    <a [routerLink]="nav.url" [class.is-selected]="currentUrl === nav.url" class="s-block-link s-block-link__right lh-xl">
+      {{nav.name}}
+    </a>
+  </li>
+</ul>

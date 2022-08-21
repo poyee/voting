@@ -1,0 +1,60 @@
+<div class="d-flex jc-center bg-black-050 h-screen">
+  <div class="d-flex fd-column ai-stretch px12 create-poll-content">
+    <h1 class="py24 mb0">投票單</h1>
+    <div class="s-card">
+      <div class="d-flex fd-column">
+        <div class="d-flex gs4 fd-column my8">
+          <div class="flex--item">
+            <label class="d-block s-label">
+              問題
+              <p class="s-description mt2">投票的問題</p>
+            </label>
+            <div class="d-flex fd-column ps-relative">
+              <input class="flex--item s-input" type="text"/>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex gs4 fd-column my8">
+          <div class="flex--item">
+            <label class="d-block s-label">
+              選項
+            </label>
+            <div class="d-grid grid__2">
+              <div class="grid--item d-flex fd-column ps-relative gs8 mt2">
+                <div *ngFor="let option of options; let i = index" class="d-flex">
+                  <div class="flex--item s-input-fill order-first d-flex ai-center">{{i+1}}.</div>
+                  <input class="flex--item s-input blr0" type="text" placeholder="輸入選項"/>
+                  <span class="svg-icon-bg iconClearSm option--dismiss" (click)="onDismissOption(i)"></span>
+                </div>
+                <div class="d-flex">
+                  <button class="s-btn s-btn__xs s-btn__outlined s-btn__muted" type="button" (click)="onClickAddOption()">新增選項</button>
+                </div>
+              </div>
+              <div class="grid--item d-flex fd-column gs4 ml32">
+                  <div class="flex--item">
+                    <div class="d-flex gs8 gsx">
+                      <div class="flex--item">
+                        <input class="s-checkbox" type="checkbox"/>
+                      </div>
+                      <label class="flex--item s-label fw-normal">多選</label>
+                    </div>
+                  </div>
+                  <div class="flex--item">
+                    <div class="d-flex gs8 gsx">
+                      <div class="flex--item">
+                        <input class="s-checkbox" type="checkbox"/>
+                      </div>
+                      <label class="flex--item s-label fw-normal">人民新增選項</label>
+                    </div>
+                  </div>
+              </div>
+           </div>
+          </div>
+        </div>
+        <div class="d-flex fd-row ai-center jc-end">
+          <button class="s-btn s-btn__primary" type="button">發起投票</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
