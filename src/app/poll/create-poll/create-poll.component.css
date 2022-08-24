@@ -26,16 +26,5 @@
   cursor: pointer;
   color: var(--black-400);
 }
-.option--dismiss:hover {
-  color: var(--black);
-}
 
-.option--plus {
-  cursor: pointer;
-  color: var(--black-400);
-}
 
-.option--plus:hover {
-  color: var(--black);
-
-}

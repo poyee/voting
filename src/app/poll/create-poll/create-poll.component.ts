@@ -1,5 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Option } from '../../model/poll/poll.model';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { Poll } from '../../model/poll/poll.model';
+import { PollService } from '../poll.service';
 
 @Component({
   selector: 'app-create-poll',
@@ -7,25 +18,77 @@ import { Option } from '../../model/poll/poll.model';
   styleUrls: ['./create-poll.component.css']
 })
 export class CreatePollComponent implements OnInit {
-  options: Array<Option> = [new Option(), new Option()];
-  multiVote: boolean = false;
+  form = this.fb.group({
+      title: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+        updateOn: 'blur'
+      }],
+      options: this.fb.array([], {
+        validators: [ this.minLengthArray(2)],
+        updateOn: 'submit'
+      }),
+      multiVote: [false],
+      allowNewOption: [false]
+    }
+  );
 
-  constructor() {
+  isSubmitted = false;
+
+  constructor(private readonly fb: FormBuilder,
+              private readonly service: PollService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    this.addOption();
+    this.addOption();
   }
 
-  onClickAddOption(): void {
-    this.options.push(new Option());
+  addOption(): void {
+    const option = this.fb.group({
+        option: ['', {
+          validators: [Validators.required],
+          updateOn: 'blur'
+        }]
+    });
+    this.options.push(option);
   }
 
   onDismissOption(index: number): void {
-    this.options.splice(index, 1);
+    if (this.options.length > 2) {
+      this.options.removeAt(index);
+    }
   }
 
-  onClickMultiVote(): void {
-    this.multiVote = !this.multiVote;
-    console.log(this.multiVote)
+  onClickCreate(): void {
+    this.isSubmitted = true;
+    if (this.form.valid) {
+      this.service.createPoll(this.form.value)
+        .subscribe(result => {
+          if (result.ok) {
+            const poll = result.rtnObj as Poll;
+            this.router.navigate([`/poll/${poll.id}`]);
+          }
+      });
+    }
+  }
+
+  get title(): FormControl {
+    return this.form.controls['title'] as FormControl;
+  }
+
+  get options(): FormArray {
+    return this.form.controls['options'] as FormArray;
+  }
+
+  minLengthArray(min: number): ValidatorFn {
+    return (c: AbstractControl):  ValidationErrors | null  => {
+      if (c.value.length >= min) {
+        // tslint:disable-next-line:no-null-keyword
+        return null;
+      }
+
+      return { minLengthArray: true};
+    };
   }
 }

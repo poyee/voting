@@ -1,0 +1,84 @@
+.option {
+  width: 100%;
+  min-height: 2em;
+  border-radius: var(--br-md);
+  border: 1px solid var(--silver-darker);
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  position: relative;
+  cursor: pointer;
+}
+
+.option.new {
+  border: 1px dashed var(--black-600);
+  color: var(--black-600);
+}
+
+.option > .option--label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  z-index: 1;
+}
+
+.option.champion > .option--bar {
+  background-color: var(--gold-lighter);
+}
+
+.option.is-selected {
+  border: 1px solid var(--green-600);
+}
+
+.option.is-selected .option--bar {
+  background-color: var(--green-100);
+}
+
+.option > .option--bar {
+  height: 100%;
+  background-color: var(--silver-lighter);
+  position: absolute;
+  top: 0;
+  z-index: var(--zi-base);
+  border: 1px solid transparent;
+  border-radius: var(--br-md);
+}
+
+
+.icons-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--black-400);
+}
+
+
+.react-icon {
+  color: var(--black-100);
+  cursor: pointer;
+}
+
+.vote-number {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-color: var(--green-400);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-react {
+  height: 16px;
+  width: 16px;
+}
