@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css",
               "src/assets/styles/icons.css",
               "node_modules/@stackoverflow/stacks/dist/css/stacks.css"

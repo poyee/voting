@@ -14,6 +14,7 @@ export class PollComponent implements OnInit {
   pollId: string;
   poll: Poll;
   selectedOption: Option = undefined;
+  prevSelectedOption: Option = undefined;
   totalVotes = 0;
   subject = new Subject<Option>();
 
@@ -80,15 +81,23 @@ export class PollComponent implements OnInit {
   }
 
   vote(option: Option): void {
-    if (option) {
-      const vote = {
-        pollId: this.pollId,
-        optionNumbers: [option.number]
-      };
-      this.pollService.vote(vote)
-        .subscribe();
-    } else {
-      //TODO: unvote
+    if (option !== this.prevSelectedOption) {
+      if (option) {
+        if (option !== this.prevSelectedOption) {
+          this.prevSelectedOption = option;
+
+          const vote = {
+            pollId: this.pollId,
+            optionNumbers: [option.number]
+          };
+          this.pollService.vote(vote)
+            .subscribe();
+        }
+      } else {
+        //TODO: unvote
+      }
+
+      this.prevSelectedOption = option;
     }
   }
 

@@ -10,20 +10,10 @@
        [class.is-selected]="menuOpen"
        (click)="onClickMenu()"><span></span></a>
     <ol class="s-topbar--content">
-      <a class="s-topbar--item s-btn"
-         aria-controls="popover-profile"
-         data-controller="s-popover"
-         data-action="s-popover#toggle"
-         data-s-popover-placement="bottom-end">
-        <span class="svg-icon-bg iconPerson"></span>
-      </a>
+      <li>
+        <a class="s-topbar--item s-topbar--item__unset s-btn s-btn__filled" (click)="onClickLogin()">登入</a>
+      </li>
     </ol>
-  </div>
-  <div class="s-popover"
-       id="popover-profile"
-       role="menu">
-    <div class="s-popover--arrow"></div>
-    <app-profile-menu></app-profile-menu>
   </div>
   <div class="s-popover"
        id="popover-nav"

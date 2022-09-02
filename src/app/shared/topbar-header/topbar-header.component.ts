@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topbar-header',
@@ -10,12 +11,16 @@ export class TopbarHeaderComponent implements OnInit {
 
   menuOpen = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onClickMenu(): void {
     this.menuOpen = !this.menuOpen;
+  }
+
+  onClickLogin(): void {
+    this.router.navigateByUrl(`login?redirectUrl=${window.location.href}`);
   }
 }

@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PollModule } from './poll/poll.module';
 import { SharedModule } from './shared/shared.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {authInterceptorProviders} from "./shared/helper/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -17,9 +19,10 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     PollModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    NoopAnimationsModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
