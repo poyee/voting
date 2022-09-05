@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { CreatePollComponent } from './poll/create-poll/create-poll.component';
 import { LoginComponent } from './registration/login/login.component';
-import { MainLayoutComponent } from './shared/main-layout/main-layout.component';
+import { AuthGuard } from './shared/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'poll/new',
-    component: CreatePollComponent
+    component: CreatePollComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '',

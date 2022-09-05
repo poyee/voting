@@ -7,6 +7,7 @@ import { GetPollComponent } from './get-poll/get-poll.component';
 import { PollRoutingModule } from './poll-routing.module';
 import { PollService } from './poll.service';
 import { PollComponent } from './poll/poll.component';
+import {LayoutModule} from "../layout/layout.module";
 
 @NgModule({
   declarations: [
@@ -14,12 +15,13 @@ import { PollComponent } from './poll/poll.component';
     GetPollComponent,
     PollComponent
   ],
-  imports: [
+    imports: [
         CommonModule,
         FormsModule,
         PollRoutingModule,
         ReactiveFormsModule,
-        SharedModule
+        SharedModule,
+        LayoutModule
     ],
   providers: [
     PollService

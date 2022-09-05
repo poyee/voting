@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
               return;
             }
             this.token.signOut();
-            window.location.href = loginPath;
+            window.location.href = `${loginPath}?redirectUrl=${window.location.href}`;
           }
         }
       ));

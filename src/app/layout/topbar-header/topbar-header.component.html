@@ -10,7 +10,14 @@
        [class.is-selected]="menuOpen"
        (click)="onClickMenu()"><span></span></a>
     <ol class="s-topbar--content">
-      <li>
+      <li *ngIf="isLoggedIn">
+          <a class="s-topbar--item">
+            <div class="s-avatar s-avatar__24 bg-theme-secondary">
+              <div class="s-avatar--letter" aria-hidden="true">{{user.displayName[0]}}</div>
+            </div>
+          </a>
+      </li>
+      <li *ngIf="!isLoggedIn">
         <a class="s-topbar--item s-topbar--item__unset s-btn s-btn__filled" (click)="onClickLogin()">登入</a>
       </li>
     </ol>

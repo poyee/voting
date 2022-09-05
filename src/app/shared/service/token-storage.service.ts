@@ -32,4 +32,8 @@ export class TokenStorageService {
   getUser(): User {
     return JSON.parse(sessionStorage.getItem(USER_KEY) as string);
   }
+
+  isLoggedIn(): boolean {
+    return this.getToken() !== null && this.getUser() !== null;
+  }
 }
