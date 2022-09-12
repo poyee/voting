@@ -82,3 +82,9 @@
   height: 16px;
   width: 16px;
 }
+
+
+.option--meta-split::after {
+  content: "•";
+  margin: 0 4px;
+}

@@ -2,3 +2,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.voting-dialog-container .mat-dialog-container {
+  padding: var(--su24) !important;
+  border-radius: var(--br-md);
+  box-shadow: var(--bs-lg);
+}

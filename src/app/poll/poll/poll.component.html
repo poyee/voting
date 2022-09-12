@@ -1,20 +1,31 @@
-<div class="d-flex fd-column">
-  <div class="s-page-title">
-    <div class="s-page-title--text">
-      <h1 class="s-page-title--header">{{poll.title}}</h1>
+<div *ngIf="poll" class="d-flex fd-column">
+  <div class="d-flex fd-column mb16">
+    <div class="d-flex fd-row ai-center g4 mb4">
+        <div class="s-avatar s-avatar__24 bg-theme-primary-350">
+          <div class="s-avatar--letter">{{poll.createdBy[0]}}</div>
+        </div>
+        <div class="fs-body1 fw-bold">{{poll.createdBy}}</div>
     </div>
+    <div class="fs-headline1">{{poll.title}}</div>
+    <span class="fc-black-500">{{poll.createdTime | datetimeAgo}}</span>
   </div>
-  <div class="d-flex fd-column mt24 mb12">
-    <div *ngFor="let option of poll.options; let i = index" class="option mb12" (click)="onClickOption(option)"
-         [ngClass]="{'is-selected': option === selectedOption }">
-      <div class="option--label">
-        <div>{{option.number}}. {{option.name}}</div>
-        <div *ngIf="isSelected" class="fs-caption">{{option.votes}}</div>
+  <div class="d-flex fd-column mb12">
+    <div *ngFor="let option of poll.options; let i = index" class="d-flex fd-column g2 mb8">
+      <div class="option" (click)="onClickOption(option)"
+           [ngClass]="{'is-selected': option === selectedOption }">
+        <div class="option--label">
+          <div>{{option.number}}. {{option.name}}</div>
+          <div *ngIf="isSelected" class="fs-caption">{{option.votes}}</div>
+        </div>
+        <div *ngIf="isSelected" class="option--bar" [ngStyle]="{'width': option.votes | votePercent: totalVotes}"></div>
       </div>
-      <div *ngIf="isSelected" class="option--bar" [ngStyle]="{'width': option.votes | votePercent: totalVotes}"></div>
+      <div class="d-flex fd-row">
+        <span class="fs-caption fc-black-500 option--meta-split">{{option.createdBy}}</span>
+        <span class="fs-caption fc-black-500">{{option.createdTime | datetimeAgo}}</span>
+      </div>
     </div>
     <div class="option new">
-      <div class="option--label fc-black-600">新增選項</div>
+      <div class="option--label fc-black-600" (click)="onClickNewOption()">新增選項</div>
     </div>
   </div>
   <div class="icons-container">
@@ -28,31 +39,30 @@
     </div>
   </div>
   <div class="d-flex fd-column mt24">
-    <div class="d-flex mb12">
+    <div class="d-flex mb8">
       <div class="fs-body2 fl-grow1">12 則留言</div>
     </div>
     <div class="d-flex gs8 ai-center mb12">
       <div class="flex--item fl-grow1">
-        <input class="s-input" placeholder="發表留言"/>
+        <input class="s-input" placeholder="發表留言" [(ngModel)]="comment"/>
       </div>
       <div class="flex--item d-flex fd-row">
-        <button class="s-btn  s-btn__sm	 s-btn__outlined s-btn__muted" type="button">留言</button>
+        <button class="s-btn s-btn__sm s-btn__outlined" type="button" (click)="onClickComment()">留言</button>
       </div>
     </div>
     <div class="flex--item mb16" *ngFor="let comment of comments">
-      <div class="d-flex g8">
+      <div class="d-flex g4">
         <div class="flex--item d-flex fd-column ai-center g2">
-          <div class="s-avatar s-avatar__24 bg-theme-primary">
-            <div class="s-avatar--letter" aria-hidden="true">{{comment.user[0]}}</div>
+          <div class="s-avatar s-avatar__24 bg-theme-primary-350">
+            <div class="s-avatar--letter" aria-hidden="true">{{comment.createdBy[0]}}</div>
           </div>
-
         </div>
         <div class="flex--item d-flex fd-column g4">
           <div class="flex--item d-flex ai-center g4">
-            <div class="fs-body1 fw-bold mr8">{{comment.user}}</div>
-            <div *ngFor="let vote of comment.options" class="vote-number">{{vote}}</div>
+            <div class="fs-body1 fw-bold">{{comment.createdBy}}</div>
+            <div *ngFor="let vote of comment.votes" class="vote-number">{{vote}}</div>
           </div>
-          <div class="fs-body1">{{comment.comment}}</div>
+          <div class="fs-body1">{{comment.body}}</div>
           <div class="icons-container">
             <div class="icon-container">
               <span class="svg-icon-bg iconThumbsup comment-react react-icon"></span>

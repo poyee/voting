@@ -7,4 +7,9 @@ export class Poll {
   options: Array<Option>;
   multiVote: boolean;
   allowNewOption: boolean;
+
+  selectedOptions: Array<number>;
+
+  createdBy: string;
+  createdTime: string;
 }

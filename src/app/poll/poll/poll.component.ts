@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { debounce, interval, Subject } from 'rxjs';
+import { Comment } from '../../model/poll/comment.model';
 import { Option } from '../../model/poll/option.model';
 import { Poll } from '../../model/poll/poll.model';
+import { AuthUtils } from '../../shared/auth/auth.utils';
+import { TokenStorageService } from '../../shared/service/token-storage.service';
+import { NewOptionComponent } from '../new-option/new-option.component';
 import { PollService } from '../poll.service';
 
 @Component({
@@ -18,23 +23,17 @@ export class PollComponent implements OnInit {
   totalVotes = 0;
   subject = new Subject<Option>();
 
-  comments: Array<any> = [
-    {
-      user: '王小明',
-      comment: 'Too Long',
-      options: [1, 2]
-    },
-    {
-      user: '李大屌',
-      comment: '再怎麼長都沒有我的屌長',
-      options: [4]
-    }
-  ];
+  comment: string;
+
+  comments: Array<Comment>;
 
   constructor(private readonly route: ActivatedRoute,
-              private readonly pollService: PollService) {
+              private readonly pollService: PollService,
+              private readonly dialog: MatDialog,
+              private readonly tokenService: TokenStorageService,
+              private readonly router: Router) {
     this.subject.pipe(
-      debounce(() => interval(1000))
+      debounce(() => interval(500))
     )
       .subscribe(option => {
         this.vote(option);
@@ -46,6 +45,7 @@ export class PollComponent implements OnInit {
       .subscribe(params => {
         this.pollId = params.get('id');
         this.loadPoll();
+        this.loadComments();
       });
   }
 
@@ -54,7 +54,24 @@ export class PollComponent implements OnInit {
       .subscribe(result => {
         if (result.ok) {
           this.poll = result.rtnObj as Poll;
-          this.totalVotes = this.poll.options.map(option => option.votes).reduce((v1, v2) => v1 + v2);
+          this.totalVotes = this.poll.options.map(option => option.votes)
+            .reduce((v1, v2) => v1 + v2);
+
+          if (this.poll.selectedOptions) {
+            const voteNumber = this.poll.selectedOptions[0];
+
+            this.selectedOption = this.poll.options.find(option => option.number === voteNumber);
+            this.prevSelectedOption = this.selectedOption;
+          }
+        }
+      });
+  }
+
+  loadComments(): void {
+    this.pollService.getComments(this.pollId)
+      .subscribe(result => {
+        if (result.ok) {
+          this.comments = result.rtnObj as Array<Comment>;
         }
       });
   }
@@ -67,8 +84,7 @@ export class PollComponent implements OnInit {
     } else {
       this.selectedOption.votes--;
 
-      // unselected mode
-      if (this.selectedOption === option) {
+      if (this.selectedOption === option) { // unselected mode
         this.selectedOption = undefined;
         this.totalVotes--;
       } else { // select new option
@@ -82,26 +98,54 @@ export class PollComponent implements OnInit {
 
   vote(option: Option): void {
     if (option !== this.prevSelectedOption) {
+      let optionNumbers: Array<number> = [];
       if (option) {
-        if (option !== this.prevSelectedOption) {
-          this.prevSelectedOption = option;
-
-          const vote = {
-            pollId: this.pollId,
-            optionNumbers: [option.number]
-          };
-          this.pollService.vote(vote)
-            .subscribe();
-        }
-      } else {
-        //TODO: unvote
+        optionNumbers = [option.number];
       }
 
+      const vote = {
+        pollId: this.pollId,
+        optionNumbers
+      };
+
+      this.pollService.vote(vote)
+        .subscribe();
       this.prevSelectedOption = option;
     }
   }
 
   get isSelected(): boolean {
     return this.selectedOption !== undefined;
+  }
+
+  onClickNewOption(): void {
+    if (!this.tokenService.isLoggedIn()) {
+      this.router.navigateByUrl(AuthUtils.getLoginUri());
+    } else {
+
+      const dialogRef = this.dialog.open(NewOptionComponent, {
+        width: '250px',
+        panelClass: 'voting-dialog-container'
+      });
+
+      dialogRef.afterClosed()
+      .subscribe(() => this.loadPoll());
+
+      dialogRef.componentInstance.pollId = this.pollId;
+    }
+  }
+
+  onClickComment(): void {
+    const body = new Comment();
+    body.pollId = this.pollId;
+    body.body = this.comment;
+
+    this.pollService.comment(body)
+      .subscribe(result => {
+        if (result.ok) {
+          this.comment = undefined;
+          this.loadComments();
+        }
+      });
   }
 }
