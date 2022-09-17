@@ -1,0 +1,44 @@
+<div>
+  <div class="mb16" *ngIf="pollsPage">
+    <div *ngFor="let poll of pollsPage.content" class="s-post-summary">
+      <div class="s-post-summary--stats">
+        <div class="s-post-summary--stats-item s-post-summary--stats-item__emphasized"
+             [ngClass]="{'fc-yellow-600': poll.voteCount > 10 && poll.voteCount <= 100, 'fc-red-600': poll.voteCount > 100}">
+          <span class="s-post-summary--stats-item-number">
+            {{poll.voteCount}}
+          </span>
+          <span class="s-post-summary--stats-item-unit">
+            人投票
+          </span>
+        </div>
+        <div class="s-post-summary--stats-item">
+          <span class="s-post-summary--stats-item-number">
+            {{poll.commentCount}}
+          </span>
+          <span class="s-post-summary--stats-item-unit">
+            人留言
+          </span>
+        </div>
+      </div>
+      <div class="s-post-summary--content">
+        <h3 class="s-post-summary--content-title">
+          <a class="s-link" [routerLink]="'/polls/' + poll.id">{{poll.title}}</a>
+        </h3>
+        <div class="s-post-summary--meta">
+          <div class="s-post-summary--meta-tags">
+            <span *ngFor="let option of poll.options" class="s-badge">{{option.name}}</span>
+<!--            [ngClass]="poll.selected === option ? 's-badge__answered' : 's-badge__votes'"-->
+          </div>
+
+          <div class="s-user-card s-user-card__minimal">
+            <time class="s-user-card--time">{{poll.createdTime | datetimeAgo}} 發起</time>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-pagination
+    [page]="this.pageNumber"
+    [totalPage]="this.pollsPage.totalPages"
+  ></app-pagination>
+</div>

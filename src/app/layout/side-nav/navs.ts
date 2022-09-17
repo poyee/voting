@@ -6,6 +6,6 @@ export class NavItem {
 export const navItems: Array<NavItem> = [
   {
     name: '投票',
-    url: '/poll/9'
+    url: '/polls'
   }
 ];

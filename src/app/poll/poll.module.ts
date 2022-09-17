@@ -10,13 +10,15 @@ import { NewOptionComponent } from './new-option/new-option.component';
 import { PollRoutingModule } from './poll-routing.module';
 import { PollService } from './poll.service';
 import { PollComponent } from './poll/poll.component';
+import { SearchPollsComponent } from './search-polls/search-polls.component';
 
 @NgModule({
   declarations: [
     CreatePollComponent,
     GetPollComponent,
     PollComponent,
-    NewOptionComponent
+    NewOptionComponent,
+    SearchPollsComponent
   ],
   imports: [
     CommonModule,

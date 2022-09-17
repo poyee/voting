@@ -1,0 +1,23 @@
+<div class="s-pagination">
+  <a *ngIf="this.page > 0"
+     class="s-pagination--item"
+     [routerLink]="'./'"
+     [queryParams]="{page: page-1}">上一頁</a>
+  <a *ngIf="!firstPageIndexInRange" class="s-pagination--item"
+     [routerLink]="'./'"
+     [queryParams]="{page: 0}">1</a>
+
+  <a *ngFor="let indic of pageIndices" [ngClass]="{'is-selected': indic === page}" class="s-pagination--item"
+     [routerLink]="'./'"
+     [queryParams]="{page: indic}">{{indic+1}}</a>
+
+  <span *ngIf="!lastPageIndexInRange" class="s-pagination--item s-pagination--item__clear">…</span>
+  <a *ngIf="!lastPageIndexInRange" class="s-pagination--item"
+     [routerLink]="'./'"
+     [queryParams]="{page: totalPage - 1}">{{totalPage}}</a>
+
+  <a *ngIf="this.page < totalPage - 1"
+      class="s-pagination--item"
+     [routerLink]="'./'"
+     [queryParams]="{page: page+1}">下一頁</a>
+</div>

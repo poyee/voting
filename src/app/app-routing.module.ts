@@ -11,7 +11,7 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'poll/new',
+    path: 'polls/new',
     component: CreatePollComponent,
     canActivate: [AuthGuard]
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [{
-      path: 'poll',
+      path: 'polls',
       loadChildren: () =>
         import('./poll/poll.module')
           .then(m => m.PollModule)

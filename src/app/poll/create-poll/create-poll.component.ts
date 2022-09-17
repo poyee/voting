@@ -67,7 +67,7 @@ export class CreatePollComponent implements OnInit {
         .subscribe(result => {
           if (result.ok) {
             const poll = result.rtnObj as Poll;
-            this.router.navigate([`/poll/${poll.id}`]);
+            this.router.navigate([`/polls/${poll.id}`]);
           }
       });
     }

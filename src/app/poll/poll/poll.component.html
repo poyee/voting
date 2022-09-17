@@ -1,6 +1,6 @@
 <div *ngIf="poll" class="d-flex fd-column">
   <div class="d-flex fd-column mb16">
-    <div class="d-flex fd-row ai-center g4 mb4">
+    <div *ngIf="poll.createdBy" class="d-flex fd-row ai-center g4 mb4">
         <div class="s-avatar s-avatar__24 bg-theme-primary-350">
           <div class="s-avatar--letter">{{poll.createdBy[0]}}</div>
         </div>
@@ -63,16 +63,6 @@
             <div *ngFor="let vote of comment.votes" class="vote-number">{{vote}}</div>
           </div>
           <div class="fs-body1">{{comment.body}}</div>
-          <div class="icons-container">
-            <div class="icon-container">
-              <span class="svg-icon-bg iconThumbsup comment-react react-icon"></span>
-              1349
-            </div>
-            <div class="icon-container">
-              <span class="svg-icon-bg iconThumbsdown  comment-react react-icon native"></span>
-              10
-            </div>
-          </div>
         </div>
       </div>
     </div>

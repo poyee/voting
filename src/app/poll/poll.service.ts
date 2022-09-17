@@ -43,4 +43,11 @@ export class PollService extends BaseService {
 
     return this.get(AppConstants.COMMENT_URI, params);
   }
+
+  getPollSummaries(page: number): Observable<Acknowledgement> {
+    const params = new HttpParams()
+      .set('page', page);
+
+    return this.get(AppConstants.POLL_URI, params);
+  }
 }
