@@ -6,7 +6,6 @@ export class CustomValidator {
       const passwordVal = group.get(password).value;
       const confirmPasswordVal = group.get(confirmPassword).value;
 
-      // tslint:disable-next-line:no-null-keyword
       return passwordVal === confirmPasswordVal ? null : { misMatch: true };
     };
   }

@@ -84,7 +84,6 @@ export class CreatePollComponent implements OnInit {
   minLengthArray(min: number): ValidatorFn {
     return (c: AbstractControl):  ValidationErrors | null  => {
       if (c.value.length >= min) {
-        // tslint:disable-next-line:no-null-keyword
         return null;
       }
 
