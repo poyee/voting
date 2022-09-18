@@ -7,7 +7,6 @@ export class AppConstants {
   static USER_URI = `${AppConstants.BASE_PATH}/users`;
   static COMMENT_URI = `${AppConstants.BASE_PATH}/comments`;
 
-
   private static OAUTH2_URL = `${AppConstants.HOST}${AppConstants.BASE_PATH}/oauth2/authorization/`;
   private static REDIRECT_URL = `http://localhost:4200/login`;
 
