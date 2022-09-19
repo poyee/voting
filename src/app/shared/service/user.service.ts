@@ -16,4 +16,8 @@ export class UserService extends BaseService {
   getCurrentUser(): Observable<Acknowledgement> {
     return this.get(`${AppConstants.USER_URI}/me`);
   }
+
+  editDisplayName(body: any): Observable<Acknowledgement> {
+    return this.put(`${AppConstants.USER_URI}/name`, body);
+  }
 }

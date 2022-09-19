@@ -1,4 +1,12 @@
-<div>
+<div class="d-flex fd-column">
+  <div class="s-page-title">
+    <div class="s-page-title--text">
+      <h1 class="s-page-title--header">投票</h1>
+    </div>
+    <div class="s-page-title--actions">
+      <button class="s-btn s-btn__sm s-btn__primary" [routerLink]="'/polls/new'">新增投票</button>
+    </div>
+  </div>
   <div class="mb16" *ngIf="pollsPage">
     <div *ngFor="let poll of pollsPage.content" class="s-post-summary">
       <div class="s-post-summary--stats">

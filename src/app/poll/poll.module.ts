@@ -5,7 +5,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LayoutModule } from '../layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
 import { CreatePollComponent } from './create-poll/create-poll.component';
-import { GetPollComponent } from './get-poll/get-poll.component';
 import { NewOptionComponent } from './new-option/new-option.component';
 import { PollRoutingModule } from './poll-routing.module';
 import { PollService } from './poll.service';
@@ -15,7 +14,6 @@ import { SearchPollsComponent } from './search-polls/search-polls.component';
 @NgModule({
   declarations: [
     CreatePollComponent,
-    GetPollComponent,
     PollComponent,
     NewOptionComponent,
     SearchPollsComponent

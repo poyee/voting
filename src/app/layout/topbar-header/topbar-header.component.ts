@@ -34,4 +34,8 @@ export class TopbarHeaderComponent implements OnInit {
   onClickLogin(): void {
     this.router.navigateByUrl(AuthUtils.getLoginUri());
   }
+
+  onUserEdit(user: User): void {
+    this.user = user;
+  }
 }

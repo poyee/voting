@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetPollComponent } from './get-poll.component';
+import { ProfileMenuComponent } from './profile-menu.component';
 
-describe('GetPollComponent', () => {
-  let component: GetPollComponent;
-  let fixture: ComponentFixture<GetPollComponent>;
+describe('ProfileMenuComponent', () => {
+  let component: ProfileMenuComponent;
+  let fixture: ComponentFixture<ProfileMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GetPollComponent ]
+      declarations: [ ProfileMenuComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GetPollComponent);
+    fixture = TestBed.createComponent(ProfileMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

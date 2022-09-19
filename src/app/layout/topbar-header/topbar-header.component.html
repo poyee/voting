@@ -12,9 +12,15 @@
     <ol class="s-topbar--content">
       <li *ngIf="isLoggedIn">
           <a class="s-topbar--item">
-            <div class="s-avatar s-avatar__24 bg-theme-primary-350">
-              <div class="s-avatar--letter" aria-hidden="true">{{user.displayName[0]}}</div>
-            </div>
+            <a class="s-avatar s-avatar__24 bg-theme-primary"
+                 aria-controls="popover-profile"
+                 data-controller="s-popover"
+                 data-action="s-popover#toggle"
+                 data-s-popover-placement="bottom-end"
+                 data-s-popover-toggle-class="is-selected"
+                 aria-hidden="true">
+              <div class="s-avatar--letter">{{user.displayName[0]}}</div>
+            </a>
           </a>
       </li>
       <li *ngIf="!isLoggedIn">
@@ -27,5 +33,11 @@
        role="menu">
     <div class="s-popover--arrow"></div>
     <app-side-nav></app-side-nav>
+  </div>
+  <div class="s-popover"
+       id="popover-profile"
+       role="menu">
+    <div class="s-popover--arrow"></div>
+    <app-profile-menu [user]="user" (editUser)="onUserEdit($event)"></app-profile-menu>
   </div>
 </header>

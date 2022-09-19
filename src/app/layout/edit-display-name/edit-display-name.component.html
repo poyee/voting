@@ -1,0 +1,9 @@
+<div class="d-flex fd-column g16">
+  <div class="d-flex ps-relative">
+    <input class="s-input" type="text" placeholder="顯示名稱" [(ngModel)]="user.displayName"/>
+  </div>
+  <div class="d-flex g12">
+    <button class="flex--item s-btn s-btn__primary" type="button" (click)="onClickEdit()">修改</button>
+    <button class="flex--item s-btn" type="button" (click)="onClickCancel()">取消</button>
+  </div>
+</div>

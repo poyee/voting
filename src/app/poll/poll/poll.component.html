@@ -1,7 +1,7 @@
 <div *ngIf="poll" class="d-flex fd-column">
   <div class="d-flex fd-column mb16">
     <div *ngIf="poll.createdBy" class="d-flex fd-row ai-center g4 mb4">
-        <div class="s-avatar s-avatar__24 bg-theme-primary-350">
+        <div class="s-avatar s-avatar__24 bg-theme-primary">
           <div class="s-avatar--letter">{{poll.createdBy[0]}}</div>
         </div>
         <div class="fs-body1 fw-bold">{{poll.createdBy}}</div>
@@ -53,7 +53,7 @@
     <div class="flex--item mb16" *ngFor="let comment of comments">
       <div class="d-flex g4">
         <div class="flex--item d-flex fd-column ai-center g2">
-          <div class="s-avatar s-avatar__24 bg-theme-primary-350">
+          <div class="s-avatar s-avatar__24 bg-theme-primary">
             <div class="s-avatar--letter" aria-hidden="true">{{comment.createdBy[0]}}</div>
           </div>
         </div>
