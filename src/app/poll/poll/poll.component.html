@@ -29,13 +29,12 @@
     </div>
   </div>
   <div class="icons-container">
-    <div class="icon-container">
-      <span class="svg-icon-bg iconThumbsup react-icon native"></span>
-      1349
-    </div>
-    <div class="icon-container">
-      <span class="svg-icon-bg iconThumbsdown react-icon"></span>
-      10
+    <div *ngFor="let react of reactType" class="icon-container">
+      <span class="svg-icon-bg react-icon"
+            [ngClass]="{'LIKE' : 'iconThumbsup', 'DISLIKE' : 'iconThumbsdown'}[react]"
+            [class.native]="react === userReact"
+            (click)="onClickReact(react)"></span>
+      {{poll.reactCount[react]}}
     </div>
   </div>
   <div class="d-flex fd-column mt24">

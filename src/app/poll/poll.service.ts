@@ -6,6 +6,7 @@ import { Acknowledgement } from '../model/acknowledgement.model';
 import { Comment } from '../model/poll/comment.model';
 import { OptionRequest } from '../model/poll/option-request.model';
 import { BaseService } from '../shared/service/base.service';
+import {React, ReactType} from '../model/poll/react.model';
 
 @Injectable()
 export class PollService extends BaseService {
@@ -49,5 +50,15 @@ export class PollService extends BaseService {
       .set('page', page);
 
     return this.get(AppConstants.POLL_URI, params);
+  }
+
+  react(pollId: string, react: ReactType) {
+    const body: React = {
+      react: react,
+    };
+
+    const path = `${AppConstants.POLL_URI}/${pollId}/reacts`;
+
+    return this.post(path, body);
   }
 }

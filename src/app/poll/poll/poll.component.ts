@@ -9,6 +9,7 @@ import { AuthUtils } from '../../shared/auth/auth.utils';
 import { TokenStorageService } from '../../shared/service/token-storage.service';
 import { NewOptionComponent } from '../new-option/new-option.component';
 import { PollService } from '../poll.service';
+import {React, ReactType} from "../../model/poll/react.model";
 
 @Component({
   selector: 'app-poll',
@@ -21,22 +22,34 @@ export class PollComponent implements OnInit {
   selectedOption: Option = undefined;
   prevSelectedOption: Option = undefined;
   totalVotes = 0;
-  subject = new Subject<Option>();
+  voteSubject = new Subject<Option>();
 
   comment: string;
-
   comments: Array<Comment>;
+
+  reactType = Object.values(ReactType);
+  userReact: ReactType
+  prevReact: ReactType
+  reactSubject = new Subject<ReactType>();
+
 
   constructor(private readonly route: ActivatedRoute,
               private readonly pollService: PollService,
               private readonly dialog: MatDialog,
               private readonly tokenService: TokenStorageService,
               private readonly router: Router) {
-    this.subject.pipe(
+    this.voteSubject.pipe(
       debounce(() => interval(500))
     )
       .subscribe(option => {
         this.vote(option);
+      });
+
+    this.reactSubject.pipe(
+      debounce(() => interval(500))
+    )
+      .subscribe(react => {
+        this.react(react);
       });
   }
 
@@ -54,6 +67,7 @@ export class PollComponent implements OnInit {
       .subscribe(result => {
         if (result.ok) {
           this.poll = result.rtnObj as Poll;
+          console.log(this.poll)
           this.totalVotes = this.poll.options.map(option => option.votes)
             .reduce((v1, v2) => v1 + v2);
 
@@ -62,6 +76,11 @@ export class PollComponent implements OnInit {
 
             this.selectedOption = this.poll.options.find(option => option.number === voteNumber);
             this.prevSelectedOption = this.selectedOption;
+          }
+
+          if (this.poll.userReact) {
+            this.userReact = this.poll.userReact;
+            this.prevReact = this.userReact;
           }
         }
       });
@@ -93,7 +112,7 @@ export class PollComponent implements OnInit {
       }
     }
 
-    this.subject.next(this.selectedOption);
+    this.voteSubject.next(this.selectedOption);
   }
 
   vote(option: Option): void {
@@ -147,5 +166,33 @@ export class PollComponent implements OnInit {
           this.loadComments();
         }
       });
+  }
+
+  onClickReact(react: ReactType) {
+    if (this.userReact === undefined) {
+      this.userReact = react;
+      this.poll.reactCount[react]++;
+    } else {
+      this.poll.reactCount[this.userReact]--;
+
+      if (this.userReact === react) { // unselected mode
+        this.userReact = undefined;
+      } else { // select new option
+        this.userReact = react;
+        this.poll.reactCount[react]++;
+      }
+    }
+
+    this.reactSubject.next(this.userReact)
+  }
+
+  private react(react: ReactType) {
+    if (react !== this.prevReact) {
+
+
+      this.pollService.react(this.pollId, react)
+        .subscribe();
+      this.prevReact = react;
+    }
   }
 }

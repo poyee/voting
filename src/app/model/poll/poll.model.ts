@@ -1,4 +1,5 @@
 import { Option } from './option.model';
+import { ReactType } from './react.model';
 
 export class Poll {
   id: number;
@@ -9,6 +10,12 @@ export class Poll {
   allowNewOption: boolean;
 
   selectedOptions: Array<number>;
+
+  userReact: ReactType;
+  reactCount: {
+    LIKE: number;
+    DISLIKE: number;
+  }
 
   createdBy: string;
   createdTime: string;
