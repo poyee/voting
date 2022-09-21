@@ -1,6 +1,6 @@
 <header class="s-topbar">
   <div class="s-topbar--container">
-    <a class="s-topbar--menu-btn"
+    <a class="s-topbar--menu-btn d-none"
        aria-controls="popover-nav"
        data-controller="s-popover"
        data-action="s-popover#toggle"
@@ -9,6 +9,9 @@
        [ngClass]="{'d-none md:d-flex' : isMainLayout}"
        [class.is-selected]="menuOpen"
        (click)="onClickMenu()"><span></span></a>
+    <a class="s-topbar--logo" [routerLink]="'/polls'">
+      <img src="./assets/logo.svg">
+    </a>
     <ol class="s-topbar--content">
       <li *ngIf="isLoggedIn">
           <a class="s-topbar--item">
