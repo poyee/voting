@@ -19,11 +19,15 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [{
-      path: 'polls',
-      loadChildren: () =>
-        import('./poll/poll.module')
-          .then(m => m.PollModule)
-    }]
+        path: 'polls',
+        loadChildren: () =>
+          import('./poll/poll.module')
+            .then(m => m.PollModule)
+      },
+      {
+        path: '**', redirectTo: 'polls'
+      }
+    ],
   }
 ];
 
