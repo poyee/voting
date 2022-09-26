@@ -9,7 +9,9 @@ import { AuthUtils } from '../../shared/auth/auth.utils';
 import { TokenStorageService } from '../../shared/service/token-storage.service';
 import { NewOptionComponent } from '../new-option/new-option.component';
 import { PollService } from '../poll.service';
-import {React, ReactType} from "../../model/poll/react.model";
+import { ReactType} from "../../model/poll/react.model";
+import { FormControl, Validators} from "@angular/forms";
+import {CustomValidator} from "../../shared/custom.validator";
 
 @Component({
   selector: 'app-poll',
@@ -24,7 +26,9 @@ export class PollComponent implements OnInit {
   totalVotes = 0;
   voteSubject = new Subject<Option>();
 
-  comment: string;
+  commentForm = new FormControl('', [Validators.required, CustomValidator.OnlyWhiteSpaceValidator()]);
+  isSubmitComment: boolean;
+
   comments: Array<Comment>;
 
   reactType = Object.values(ReactType);
@@ -155,17 +159,27 @@ export class PollComponent implements OnInit {
   }
 
   onClickComment(): void {
+    if (this.commentForm.invalid) {
+      this.isSubmitComment = true;
+      this.commentForm.setValue('')
+      return;
+    }
+
     const body = new Comment();
     body.pollId = this.pollId;
-    body.body = this.comment;
+    body.body = this.commentForm.value;
 
     this.pollService.comment(body)
       .subscribe(result => {
         if (result.ok) {
-          this.comment = undefined;
+          this.commentForm.setValue('')
           this.loadComments();
         }
       });
+  }
+
+  get commentInvalid(): boolean {
+    return this.commentForm.invalid && this.isSubmitComment;
   }
 
   onClickReact(react: ReactType) {

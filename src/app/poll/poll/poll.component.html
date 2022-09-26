@@ -41,13 +41,12 @@
     <div class="d-flex mb8">
       <div class="fs-body2 fl-grow1">{{comments.length}} 則留言</div>
     </div>
-    <div class="d-flex gs8 ai-center mb12">
-      <div class="flex--item fl-grow1">
-        <input class="s-input" placeholder="發表留言" [(ngModel)]="comment"/>
+    <div class="d-flex gs8 mb12 ai-start">
+      <div class="flex--item fl-grow1" [class.has-error]="commentInvalid">
+        <input class="s-input" placeholder="發表留言" [formControl]="commentForm"/>
+        <p *ngIf="commentInvalid" class="flex--item s-input-message">留言不得空白</p>
       </div>
-      <div class="flex--item d-flex fd-row">
-        <button class="s-btn s-btn__sm s-btn__outlined" type="button" (click)="onClickComment()">留言</button>
-      </div>
+      <button class="s-btn s-btn__sm s-btn__outlined" type="button" (click)="onClickComment()">留言</button>
     </div>
     <div class="flex--item mb16" *ngFor="let comment of comments">
       <div class="d-flex g4">
