@@ -12,7 +12,8 @@
   <div class="d-flex fd-column mb12">
     <div *ngFor="let option of poll.options; let i = index" class="d-flex fd-column g2 mb8">
       <div class="option" (click)="onClickOption(option)"
-           [ngClass]="{'is-selected': option === selectedOption }">
+           [class.champion]="isSelected && option.votes === mostVote"
+           [class.is-selected]="option.votes !== mostVote && option === selectedOption">
         <div class="option--label">
           <div>{{option.number}}. {{option.name}}</div>
           <div *ngIf="isSelected" class="fs-caption">{{option.votes}}</div>

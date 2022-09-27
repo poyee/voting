@@ -25,6 +25,10 @@
   z-index: 1;
 }
 
+.option.champion  {
+  border: 1px solid var(--gold-darker);
+}
+
 .option.champion > .option--bar {
   background-color: var(--gold-lighter);
 }

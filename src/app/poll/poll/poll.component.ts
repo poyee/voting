@@ -12,6 +12,7 @@ import { PollService } from '../poll.service';
 import { ReactType} from "../../model/poll/react.model";
 import { FormControl, Validators} from "@angular/forms";
 import {CustomValidator} from "../../shared/custom.validator";
+import {MostVoteOption} from "../../shared/most-vote-option";
 
 @Component({
   selector: 'app-poll',
@@ -36,6 +37,7 @@ export class PollComponent implements OnInit {
   prevReact: ReactType
   reactSubject = new Subject<ReactType>();
 
+  mostVoteOption: MostVoteOption;
 
   constructor(private readonly route: ActivatedRoute,
               private readonly pollService: PollService,
@@ -71,6 +73,8 @@ export class PollComponent implements OnInit {
       .subscribe(result => {
         if (result.ok) {
           this.poll = result.rtnObj as Poll;
+          this.mostVoteOption = new MostVoteOption(this.poll.options);
+
           console.log(this.poll)
           this.totalVotes = this.poll.options.map(option => option.votes)
             .reduce((v1, v2) => v1 + v2);
@@ -100,6 +104,8 @@ export class PollComponent implements OnInit {
   }
 
   onClickOption(option: Option): void {
+    this.adjustMostVote(option);
+
     if (this.selectedOption === undefined) {
       this.selectedOption = option;
       this.selectedOption.votes++;
@@ -117,6 +123,22 @@ export class PollComponent implements OnInit {
     }
 
     this.voteSubject.next(this.selectedOption);
+  }
+
+  adjustMostVote(option: Option): void {
+    if (this.selectedOption === undefined) {
+      this.mostVoteOption.increase(option.votes);
+    } else {
+      if (this.selectedOption !== option) {
+        this.mostVoteOption.increase(option.votes);
+      }
+
+      this.mostVoteOption.decrease(this.selectedOption.votes);
+    }
+  }
+
+  get mostVote(): number {
+    return this.mostVoteOption.mostVote;
   }
 
   vote(option: Option): void {
