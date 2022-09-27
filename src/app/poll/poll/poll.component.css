@@ -82,6 +82,10 @@
   justify-content: center;
 }
 
+.vote-number.champion {
+  background-color: var(--gold-darker);
+}
+
 .comment-react {
   height: 16px;
   width: 16px;
