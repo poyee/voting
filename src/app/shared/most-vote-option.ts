@@ -14,8 +14,6 @@ export class MostVoteOption {
       const voteCount = maxVoteCount + i;
       this.voteToOptionCount.set(voteCount, options.filter(option => option.votes === voteCount).length);
     }
-
-    console.log(this.voteToOptionCount)
   }
 
   decrease(vote: number): void {
@@ -29,7 +27,6 @@ export class MostVoteOption {
   }
 
   private adjust(vote: number, delta: number): void {
-    console.log(this.voteToOptionCount)
     if (this.voteToOptionCount.has(vote)) {
       this.voteToOptionCount.set(vote, this.voteToOptionCount.get(vote) + delta);
     }

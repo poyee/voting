@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Title} from "@angular/platform-browser";
 
 @Component({
@@ -6,10 +6,13 @@ import {Title} from "@angular/platform-browser";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = '公投網';
+export class AppComponent implements OnInit {
+  appTitle = '公投網';
 
-  constructor(private titleService: Title) {
-    titleService.setTitle(this.title);
+  constructor(private title: Title) {
+  }
+
+  ngOnInit(): void {
+    this.title.setTitle(this.appTitle)
   }
 }

@@ -19,7 +19,6 @@ export class SideNavComponent implements OnInit {
     this.currentUrl = this.router.url
       .split('?')[0];
 
-    console.log(this.currentUrl)
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 

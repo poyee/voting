@@ -13,6 +13,7 @@ import { ReactType} from "../../model/poll/react.model";
 import { FormControl, Validators} from "@angular/forms";
 import {CustomValidator} from "../../shared/custom.validator";
 import {MostVoteOption} from "../../shared/most-vote-option";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-poll',
@@ -75,7 +76,6 @@ export class PollComponent implements OnInit {
           this.poll = result.rtnObj as Poll;
           this.mostVoteOption = new MostVoteOption(this.poll.options);
 
-          console.log(this.poll)
           this.totalVotes = this.poll.options.map(option => option.votes)
             .reduce((v1, v2) => v1 + v2);
 
