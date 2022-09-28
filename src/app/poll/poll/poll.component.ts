@@ -10,7 +10,7 @@ import { TokenStorageService } from '../../shared/service/token-storage.service'
 import { NewOptionComponent } from '../new-option/new-option.component';
 import { PollService } from '../poll.service';
 import { ReactType} from "../../model/poll/react.model";
-import { FormControl, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {CustomValidator} from "../../shared/custom.validator";
 import {MostVoteOption} from "../../shared/most-vote-option";
 import {Meta, Title} from "@angular/platform-browser";
@@ -28,7 +28,14 @@ export class PollComponent implements OnInit {
   totalVotes = 0;
   voteSubject = new Subject<Option>();
 
-  commentForm = new FormControl('', [Validators.required, CustomValidator.OnlyWhiteSpaceValidator()]);
+  commentForm = this.fb.group({
+    comment: ['', {
+      validators: [Validators.required, CustomValidator.OnlyWhiteSpaceValidator()],
+      updateOn: 'submit'
+    }],
+    anonymous: [false]
+  });
+
   isSubmitComment: boolean;
 
   comments: Array<Comment>;
@@ -44,7 +51,8 @@ export class PollComponent implements OnInit {
               private readonly pollService: PollService,
               private readonly dialog: MatDialog,
               private readonly tokenService: TokenStorageService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              private readonly fb: FormBuilder) {
     this.voteSubject.pipe(
       debounce(() => interval(500))
     )
@@ -181,20 +189,22 @@ export class PollComponent implements OnInit {
   }
 
   onClickComment(): void {
+    console.log(this.commentForm.controls['anonymous'].value)
     if (this.commentForm.invalid) {
       this.isSubmitComment = true;
-      this.commentForm.setValue('')
+      this.commentForm.controls['comment'].setValue('')
       return;
     }
 
     const body = new Comment();
     body.pollId = this.pollId;
-    body.body = this.commentForm.value;
+    body.body = this.commentForm.controls['comment'].value;
+    body.anonymous = this.commentForm.controls['anonymous'].value;
 
     this.pollService.comment(body)
       .subscribe(result => {
         if (result.ok) {
-          this.commentForm.setValue('')
+          this.commentForm.controls['comment'].setValue('')
           this.loadComments();
         }
       });

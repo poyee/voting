@@ -1,11 +1,6 @@
 <div *ngIf="poll" class="d-flex fd-column">
   <div class="d-flex fd-column mb16">
-    <div *ngIf="poll.createdBy" class="d-flex fd-row ai-center g4 mb4">
-        <div class="s-avatar s-avatar__24 bg-theme-primary">
-          <div class="s-avatar--letter">{{poll.createdBy[0]}}</div>
-        </div>
-        <div class="fs-body1 fw-bold">{{poll.createdBy}}</div>
-    </div>
+    <app-user-avatar [createdBy]="poll.createdBy"></app-user-avatar>
     <div class="fs-headline1">{{poll.title}}</div>
     <span class="fc-black-500">{{poll.createdTime | datetimeAgo}}</span>
   </div>
@@ -44,28 +39,34 @@
     <div class="d-flex mb8">
       <div class="fs-body2 fl-grow1">{{comments.length}} 則留言</div>
     </div>
-    <div class="d-flex gs8 mb12 ai-start">
-      <div class="flex--item fl-grow1" [class.has-error]="commentInvalid">
-        <input class="s-input" placeholder="發表留言" [formControl]="commentForm"/>
-        <p *ngIf="commentInvalid" class="flex--item s-input-message">留言不得空白</p>
-      </div>
-      <button class="s-btn s-btn__sm s-btn__outlined" type="button" (click)="onClickComment()">留言</button>
-    </div>
-    <div class="flex--item mb16" *ngFor="let comment of comments">
-      <div class="d-flex g4">
-        <div class="flex--item d-flex fd-column ai-center g2">
-          <div class="s-avatar s-avatar__24 bg-theme-primary">
-            <div class="s-avatar--letter" aria-hidden="true">{{comment.createdBy[0]}}</div>
-          </div>
-        </div>
-        <div class="flex--item d-flex fd-column g4">
-          <div class="flex--item d-flex ai-center g4">
-            <div class="fs-body1 fw-bold">{{comment.createdBy}}</div>
-            <div *ngFor="let vote of comment.votes" class="vote-number">{{vote}}</div>
-          </div>
-          <div class="fs-body1">{{comment.body}}</div>
+    <form [formGroup]="commentForm" class="d-flex fd-column g4 mb12" (ngSubmit)="onClickComment()">
+      <div class="d-flex ai-center">
+        <label class="s-label fs-body1">匿名</label>
+        <div class="flex--item s-toggle-switch">
+          <input type="checkbox" formControlName="anonymous">
+          <div class="s-toggle-switch--indicator"></div>
         </div>
       </div>
+      <div class="d-flex g8 ai-start">
+        <div class="fl-grow1" [class.has-error]="commentInvalid">
+          <input class="s-input" placeholder="發表留言" formControlName="comment"/>
+          <p *ngIf="commentInvalid" class="flex--item s-input-message">留言不得空白</p>
+        </div>
+        <button class="s-btn s-btn__sm s-btn__outlined" type="submit">留言</button>
+      </div>
+    </form>
+    <div class="flex--item mb8 d-flex fd-column" *ngFor="let comment of comments">
+      <div *ngIf="!comment.anonymous" class="d-flex ai-start g4">
+        <app-user-avatar [createdBy]="comment.createdBy"></app-user-avatar>
+        <div *ngFor="let vote of comment.votes" class="vote-number ps-relative t4">{{vote}}</div>
+      </div>
+      <div *ngIf="comment.anonymous" class="d-flex fd-row ai-center g4 mb4">
+        <div class="s-avatar s-avatar__24 bg-blue-500">
+          <span class="svg-icon-bg iconPerson fc-white"></span>
+        </div>
+        <div class="fs-body1 fw-bold">匿名</div>
+      </div>
+      <div class="fs-body1">{{comment.body}}</div>
     </div>
   </div>
 </div>

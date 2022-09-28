@@ -5,13 +5,15 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { DateTimeAgoPipe } from './pipe/datetime-ago.pipe';
 import { VotePercentPipe } from './pipe/vote-percent.pipe';
 import {CommonModule } from '@angular/common';
+import { UserAvatarComponent } from './user-avatar/user-avatar.component';
 @NgModule({
-  declarations: [VotePercentPipe, DateTimeAgoPipe, PaginationComponent],
-  exports: [
-    VotePercentPipe,
-    DateTimeAgoPipe,
-    PaginationComponent
-  ],
+  declarations: [VotePercentPipe, DateTimeAgoPipe, PaginationComponent, UserAvatarComponent],
+    exports: [
+        VotePercentPipe,
+        DateTimeAgoPipe,
+        PaginationComponent,
+        UserAvatarComponent
+    ],
   imports: [
     RouterModule,
     CommonModule
