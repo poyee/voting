@@ -78,10 +78,9 @@ export class PollComponent implements OnInit {
   }
 
   loadPoll(): void {
-    this.pollService.getPoll(this.pollId)
-      .subscribe(result => {
-        if (result.ok) {
-          this.poll = result.rtnObj as Poll;
+    this.poll = this.route.snapshot.data['poll'];
+
+
           this.mostVoteOption = new MostVoteOption(this.poll.options);
 
           this.totalVotes = this.poll.options.map(option => option.votes)
@@ -98,8 +97,6 @@ export class PollComponent implements OnInit {
             this.userReact = this.poll.userReact;
             this.prevReact = this.userReact;
           }
-        }
-      });
   }
 
   loadComments(): void {
