@@ -48,25 +48,51 @@
         </div>
       </div>
       <div class="d-flex g8 ai-start">
-        <div class="fl-grow1" [class.has-error]="commentInvalid">
+        <div class="fl-grow1" [class.has-error]="commentBody.invalid && isSubmitComment">
           <input class="s-input" placeholder="發表留言" formControlName="comment"/>
-          <p *ngIf="commentInvalid" class="flex--item s-input-message">留言不得空白</p>
+          <p *ngIf="isSubmitComment && (commentBody.hasError('required') || commentBody.hasError('onlyWhiteSpace'))" class="flex--item s-input-message">留言不得空白</p>
+          <p *ngIf="isSubmitComment && commentBody.hasError('maxlength')" class="flex--item s-input-message">留言不得超過200字</p>
         </div>
         <button class="s-btn s-btn__sm s-btn__outlined" type="submit">留言</button>
       </div>
     </form>
     <div class="flex--item mb8 d-flex fd-column" *ngFor="let comment of comments">
-      <div *ngIf="!comment.anonymous" class="d-flex ai-start g4">
-        <app-user-avatar [createdBy]="comment.createdBy"></app-user-avatar>
-        <div *ngFor="let vote of comment.votes" class="vote-number ps-relative t4">{{vote}}</div>
-      </div>
-      <div *ngIf="comment.anonymous" class="d-flex fd-row ai-center g4 mb4">
-        <div class="s-avatar s-avatar__24 bg-blue-500">
-          <span class="svg-icon-bg iconPerson fc-white"></span>
+      <div class="d-flex fd-row jc-space-between">
+        <div class="d-flex fd-column">
+          <div *ngIf="!comment.anonymous" class="d-flex ai-start g4">
+            <app-user-avatar [createdBy]="comment.createdBy"></app-user-avatar>
+            <div *ngFor="let vote of comment.votes" class="vote-number ps-relative t4">{{vote}}</div>
+          </div>
+          <div *ngIf="comment.anonymous" class="d-flex fd-row ai-center g4 mb4">
+            <div class="s-avatar s-avatar__24 bg-blue-500">
+              <span class="svg-icon-bg iconPerson fc-white"></span>
+            </div>
+            <div class="fs-body1 fw-bold">匿名</div>
+          </div>
+          <div class="fs-body1">{{comment.body}}</div>
         </div>
-        <div class="fs-body1 fw-bold">匿名</div>
+        <div *ngIf="comment.editable">
+          <a class="fc-black c-pointer"
+                aria-controls="popover-comment-menu"
+                aria-expanded="false"
+                data-controller="s-popover"
+                data-action="s-popover#toggle"
+                data-s-popover-placement="bottom-end"
+                data-s-popover-toggle-class="is-selected">
+            <span class="svg-icon-bg iconEllipsisVertical"></span>
+          </a>
+          <div class="s-popover s-popover__tooltip"
+               id="popover-comment-menu"
+               role="menu">
+            <div class="s-popover--arrow"></div>
+              <ul class="s-menu" role="menu">
+                <li role="menuitem">
+                  <a class="s-block-link" (click)="deleteComment(comment.id)">刪除</a>
+                </li>
+              </ul>
+          </div>
+        </div>
       </div>
-      <div class="fs-body1">{{comment.body}}</div>
     </div>
   </div>
 </div>

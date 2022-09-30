@@ -10,10 +10,9 @@ import { TokenStorageService } from '../../shared/service/token-storage.service'
 import { NewOptionComponent } from '../new-option/new-option.component';
 import { PollService } from '../poll.service';
 import { ReactType} from "../../model/poll/react.model";
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {CustomValidator} from "../../shared/custom.validator";
 import {MostVoteOption} from "../../shared/most-vote-option";
-import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-poll',
@@ -30,8 +29,8 @@ export class PollComponent implements OnInit {
 
   commentForm = this.fb.group({
     comment: ['', {
-      validators: [Validators.required, CustomValidator.OnlyWhiteSpaceValidator()],
-      updateOn: 'submit'
+      validators: [Validators.required, CustomValidator.OnlyWhiteSpaceValidator(), Validators.maxLength(200)],
+      updateOn: 'blur'
     }],
     anonymous: [false]
   });
@@ -189,10 +188,8 @@ export class PollComponent implements OnInit {
   }
 
   onClickComment(): void {
-    console.log(this.commentForm.controls['anonymous'].value)
     if (this.commentForm.invalid) {
       this.isSubmitComment = true;
-      this.commentForm.controls['comment'].setValue('')
       return;
     }
 
@@ -210,8 +207,8 @@ export class PollComponent implements OnInit {
       });
   }
 
-  get commentInvalid(): boolean {
-    return this.commentForm.invalid && this.isSubmitComment;
+  get commentBody(): AbstractControl {
+    return this.commentForm.controls['comment'];
   }
 
   onClickReact(react: ReactType) {
@@ -240,5 +237,16 @@ export class PollComponent implements OnInit {
         .subscribe();
       this.prevReact = react;
     }
+  }
+
+  deleteComment(id: number): void {
+    console.log(id)
+    this.pollService.deleteComment(id)
+      .subscribe(result => {
+        console.log(result)
+        if (result.ok) {
+          this.loadComments();
+        }
+      })
   }
 }

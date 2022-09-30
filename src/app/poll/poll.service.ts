@@ -52,7 +52,7 @@ export class PollService extends BaseService {
     return this.get(AppConstants.POLL_URI, params);
   }
 
-  react(pollId: string, react: ReactType) {
+  react(pollId: string, react: ReactType): Observable<Acknowledgement> {
     const body: React = {
       react: react,
     };
@@ -60,5 +60,9 @@ export class PollService extends BaseService {
     const path = `${AppConstants.POLL_URI}/${pollId}/reacts`;
 
     return this.post(path, body);
+  }
+
+  deleteComment(id: number): Observable<Acknowledgement> {
+    return this.delete(`${AppConstants.COMMENT_URI}/${id}`)
   }
 }

@@ -96,3 +96,7 @@
   content: "•";
   margin: 0 4px;
 }
+
+.mat-icon {
+  font-size: 18px;
+}
