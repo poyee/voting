@@ -107,7 +107,6 @@ export class PollComponent implements OnInit {
       .subscribe(result => {
         if (result.ok) {
           this.comments = result.rtnObj as Array<Comment>;
-          console.log(this.comments)
         }
       });
   }
@@ -242,7 +241,6 @@ export class PollComponent implements OnInit {
   }
 
   deleteComment(id: number): void {
-    console.log(id)
     this.pollService.deleteComment(id)
       .subscribe(result => {
         if (result.ok) {

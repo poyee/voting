@@ -10,9 +10,6 @@ import { PollRoutingModule } from './poll-routing.module';
 import { PollService } from './poll.service';
 import { PollComponent } from './poll/poll.component';
 import { SearchPollsComponent } from './search-polls/search-polls.component';
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -28,10 +25,7 @@ import {MatMenuModule} from "@angular/material/menu";
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule
+    MatDialogModule
   ],
   providers: [
     PollService
