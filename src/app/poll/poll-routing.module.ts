@@ -18,7 +18,9 @@ export class PollResolver implements Resolve<Poll> {
     const pollId = route.paramMap.get('id');
     if (pollId) {
       return this.service.getPoll(pollId).pipe(
-        map(result => result.rtnObj as Poll),
+        map(result => {
+          return result.rtnObj as Poll
+        }),
         catchError(err => {
           this.redirect();
           return throwError(err);

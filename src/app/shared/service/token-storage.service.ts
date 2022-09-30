@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import { User } from '../../model/auth/user.model';
+import {SessionStorage} from "./session-storage";
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -9,28 +10,28 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
 
-  constructor() { }
+  constructor(private readonly storage: SessionStorage) { }
 
   signOut(): void {
-    window.sessionStorage.clear();
+    this.storage.clear();
   }
 
   public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    this.storage.removeItem(TOKEN_KEY);
+    this.storage.setItem(TOKEN_KEY, token);
   }
 
   public getToken(): string | null {
-    return sessionStorage.getItem(TOKEN_KEY);
+    return this.storage.getItem(TOKEN_KEY);
   }
 
   saveUser(user: User): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.storage.removeItem(USER_KEY);
+    this.storage.setItem(USER_KEY, JSON.stringify(user));
   }
 
   getUser(): User {
-    return JSON.parse(sessionStorage.getItem(USER_KEY) as string);
+    return JSON.parse(this.storage.getItem(USER_KEY));
   }
 
   isLoggedIn(): boolean {

@@ -45,7 +45,7 @@
       </div>
     </div>
   </div>
-  <app-pagination
+  <app-pagination *ngIf="this.pollsPage"
     [page]="this.pageNumber"
     [totalPage]="this.pollsPage.totalPages"
   ></app-pagination>
