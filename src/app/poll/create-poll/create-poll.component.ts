@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormControl,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormControl,
   ValidationErrors,
   ValidatorFn,
   Validators
@@ -34,7 +34,7 @@ export class CreatePollComponent implements OnInit {
 
   isSubmitted = false;
 
-  constructor(private readonly fb: FormBuilder,
+  constructor(private readonly fb: UntypedFormBuilder,
               private readonly service: PollService,
               private router: Router) {
   }
@@ -73,12 +73,12 @@ export class CreatePollComponent implements OnInit {
     }
   }
 
-  get title(): FormControl {
-    return this.form.controls['title'] as FormControl;
+  get title(): UntypedFormControl {
+    return this.form.controls['title'] as UntypedFormControl;
   }
 
-  get options(): FormArray {
-    return this.form.controls['options'] as FormArray;
+  get options(): UntypedFormArray {
+    return this.form.controls['options'] as UntypedFormArray;
   }
 
   minLengthArray(min: number): ValidatorFn {

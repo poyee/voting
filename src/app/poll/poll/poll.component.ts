@@ -10,7 +10,7 @@ import { TokenStorageService } from '../../shared/service/token-storage.service'
 import { NewOptionComponent } from '../new-option/new-option.component';
 import { PollService } from '../poll.service';
 import { ReactType} from "../../model/poll/react.model";
-import {AbstractControl, FormBuilder, FormControl, Validators} from "@angular/forms";
+import {AbstractControl, UntypedFormBuilder, FormControl, Validators} from "@angular/forms";
 import {CustomValidator} from "../../shared/custom.validator";
 import {MostVoteOption} from "../../shared/most-vote-option";
 import {ErrorMessageComponent} from "../../shared/error-message/error-message.component";
@@ -52,7 +52,7 @@ export class PollComponent implements OnInit {
               private readonly dialog: MatDialog,
               private readonly tokenService: TokenStorageService,
               private readonly router: Router,
-              private readonly fb: FormBuilder) {
+              private readonly fb: UntypedFormBuilder) {
     this.voteSubject.pipe(
       debounce(() => interval(500))
     )

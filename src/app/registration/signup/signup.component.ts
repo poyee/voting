@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtResponse } from '../../model/auth/jwt-response.model';
 import { CustomValidator } from '../../shared/custom.validator';
@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
 
   isSubmitted = false;
 
-  constructor(private readonly fb: FormBuilder,
+  constructor(private readonly fb: UntypedFormBuilder,
               private readonly router: Router,
               private readonly authService: AuthService,
               private readonly tokenStorage: TokenStorageService) { }
@@ -51,16 +51,16 @@ export class SignupComponent implements OnInit {
     this.tokenStorage.saveUser(jwtResponse.user);
   }
 
-  get email(): FormControl {
-    return this.form.controls['email'] as FormControl;
+  get email(): UntypedFormControl {
+    return this.form.controls['email'] as UntypedFormControl;
   }
 
-  get password(): FormControl {
-    return this.form.controls['password'] as FormControl;
+  get password(): UntypedFormControl {
+    return this.form.controls['password'] as UntypedFormControl;
   }
 
-  get matchPassword(): FormControl {
-    return this.form.controls['matchPassword'] as FormControl;
+  get matchPassword(): UntypedFormControl {
+    return this.form.controls['matchPassword'] as UntypedFormControl;
   }
 
   get passwordMatchError(): boolean {
