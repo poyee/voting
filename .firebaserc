@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "voting-360804": {
+      "hosting": {
+        "voting": [
+          "voting-360804"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "voting-360804"
+  }
+}
