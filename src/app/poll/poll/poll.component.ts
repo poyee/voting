@@ -13,6 +13,7 @@ import { ReactType} from "../../model/poll/react.model";
 import {AbstractControl, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {CustomValidator} from "../../shared/custom.validator";
 import {MostVoteOption} from "../../shared/most-vote-option";
+import {ErrorMessageComponent} from "../../shared/error-message/error-message.component";
 
 @Component({
   selector: 'app-poll',
@@ -240,13 +241,20 @@ export class PollComponent implements OnInit {
   }
 
   deleteComment(id: number): void {
-    console.log(id)
     this.pollService.deleteComment(id)
       .subscribe(result => {
-        console.log(result)
         if (result.ok) {
           this.loadComments();
         }
-      })
+      },
+        error => {
+            const dialogRef = this.dialog.open(ErrorMessageComponent, {
+              width: '250px',
+              panelClass: 'voting-dialog-container',
+              autoFocus: false
+            });
+
+          dialogRef.componentInstance.message = error.error.errorMsg;
+        })
   }
 }

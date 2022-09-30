@@ -6,8 +6,9 @@ import { DateTimeAgoPipe } from './pipe/datetime-ago.pipe';
 import { VotePercentPipe } from './pipe/vote-percent.pipe';
 import {CommonModule } from '@angular/common';
 import { UserAvatarComponent } from './user-avatar/user-avatar.component';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 @NgModule({
-  declarations: [VotePercentPipe, DateTimeAgoPipe, PaginationComponent, UserAvatarComponent],
+  declarations: [VotePercentPipe, DateTimeAgoPipe, PaginationComponent, UserAvatarComponent, ErrorMessageComponent],
     exports: [
         VotePercentPipe,
         DateTimeAgoPipe,
