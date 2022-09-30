@@ -72,25 +72,14 @@
           <div class="fs-body1">{{comment.body}}</div>
         </div>
         <div *ngIf="comment.editable">
-          <a class="fc-black c-pointer"
-                aria-controls="popover-comment-menu"
-                aria-expanded="false"
-                data-controller="s-popover"
-                data-action="s-popover#toggle"
-                data-s-popover-placement="bottom-end"
-                data-s-popover-toggle-class="is-selected">
-            <span class="svg-icon-bg iconEllipsisVertical"></span>
-          </a>
-          <div class="s-popover s-popover__tooltip"
-               id="popover-comment-menu"
-               role="menu">
-            <div class="s-popover--arrow"></div>
-              <ul class="s-menu" role="menu">
-                <li role="menuitem">
-                  <a class="s-block-link" (click)="deleteComment(comment.id)">刪除</a>
-                </li>
-              </ul>
-          </div>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="deleteComment(comment.id)">
+              <span>刪除</span>
+            </button>
+          </mat-menu>
         </div>
       </div>
     </div>
