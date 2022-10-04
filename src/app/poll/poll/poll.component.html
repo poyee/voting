@@ -1,8 +1,31 @@
 <div *ngIf="poll" class="d-flex fd-column">
-  <div class="d-flex fd-column mb16">
-    <app-user-avatar [createdBy]="poll.createdBy"></app-user-avatar>
-    <div class="fs-headline1">{{poll.title}}</div>
-    <span class="fc-black-500">{{poll.createdTime | datetimeAgo}}</span>
+  <div class="d-flex fd-row ai-center jc-space-between">
+    <div class="d-flex fd-column mb16">
+      <app-user-avatar [createdBy]="poll.createdBy"></app-user-avatar>
+      <div class="fs-headline1">{{poll.title}}</div>
+      <span class="fc-black-500">{{poll.createdTime | datetimeAgo}}</span>
+    </div>
+    <div *ngIf="poll.editable">
+      <a class="fc-black c-pointer"
+         [attr.aria-controls]="'popover-poll-menu'"
+         aria-expanded="false"
+         data-controller="s-popover"
+         data-action="s-popover#toggle"
+         data-s-popover-placement="bottom-end"
+         data-s-popover-toggle-class="is-selected">
+        <span class="svg-icon-bg iconEllipsisVertical"></span>
+      </a>
+      <div class="s-popover s-popover__tooltip"
+           [attr.id]="'popover-poll-menu'"
+           role="menu">
+        <div class="s-popover--arrow"></div>
+        <ul class="s-menu" role="menu">
+          <li role="menuitem">
+            <a class="s-block-link" (click)="deletePoll()">刪除投票</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="d-flex fd-column mb12">
     <div *ngFor="let option of poll.options; let i = index" class="d-flex fd-column g2 mb12">

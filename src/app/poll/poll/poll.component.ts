@@ -254,4 +254,22 @@ export class PollComponent implements OnInit {
           dialogRef.componentInstance.message = error.error.errorMsg;
         })
   }
+
+  deletePoll(): void {
+    this.pollService.deletePoll(this.poll.id)
+      .subscribe(result => {
+          if (result.ok) {
+            this.router.navigateByUrl("/polls")
+          }
+        },
+        error => {
+          const dialogRef = this.dialog.open(ErrorMessageComponent, {
+            width: '250px',
+            panelClass: 'voting-dialog-container',
+            autoFocus: false
+          });
+
+          dialogRef.componentInstance.message = error.error.errorMsg;
+        })
+  }
 }

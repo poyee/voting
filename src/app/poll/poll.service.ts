@@ -65,4 +65,8 @@ export class PollService extends BaseService {
   deleteComment(id: number): Observable<Acknowledgement> {
     return this.delete(`${AppConstants.COMMENT_URI}/${id}`)
   }
+
+  deletePoll(id: number): Observable<Acknowledgement> {
+    return this.delete(`${AppConstants.POLL_URI}/${id}`)
+  }
 }

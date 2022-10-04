@@ -19,4 +19,6 @@ export class Poll {
 
   createdBy: string;
   createdTime: string;
+
+  editable: boolean;
 }
